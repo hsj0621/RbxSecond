@@ -7,9 +7,9 @@ local e = React.createElement
 local bgTr = 0.5
 return function()
 	local children = {}
-
-	local main = UIUtils.CreateFrame({ 0, 0, 0, 0 }, children, false, {
-		BackgroundTransparency = bgTr,
-	})
+	local main = e("Frame", {
+		Size = UDim2.fromScale(1, 1),
+		BackgroundTransparency = 1,
+	}, {})
 	return main
 end

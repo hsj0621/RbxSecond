@@ -1,11 +1,13 @@
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local ServerScriptService = game:GetService("ServerScriptService")
+local Profiles = require(ServerScriptService.Server.data.Profiles)
 local Packets = require(ReplicatedStorage.Shared.network.Packets)
 local TableUtils = require(ReplicatedStorage.Shared.utils.TableUtils)
 local Admins = require(script.Parent.Admins)
 local PlayerEvents = require(ServerScriptService.Server.events.PlayerEvents)
+local GameObject = require(ServerScriptService.Server.objects.GameObject)
+local PlayerObject = require(ServerScriptService.Server.objects.PlayerObject)
 local Connections = require(ServerScriptService.Server.player.Connections)
-local Profiles = require(ServerScriptService.Server.player.data.Profiles)
 
 local function log(player: Player, message: string)
 	Packets.SendLogPacket:FireClient(player, message)
@@ -16,10 +18,18 @@ local function warning(player: Player, message: string)
 end
 
 local generalCommands = {
+	test = function(player: Player)
+		local playerObject = PlayerObject.get(player) :: PlayerObject.PlayerObject
+		print(playerObject)
+		print(playerObject:getPosition())
+	end,
 	data = function(player: Player)
 		log(player, "Your Player Data:")
 		local data = Profiles.get(player)
 		log(player, data)
+	end,
+	object = function()
+		print(GameObject.getAll())
 	end,
 }
 
